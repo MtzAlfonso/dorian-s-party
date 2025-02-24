@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: Amoresa;
+  font-display: swap;
+  src: url('/fonts/Amoresa-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: Marcellus;
+  font-display: swap;
+  src: url('/fonts/Marcellus-Regular.ttf') format('truetype');
+}
+
+@theme {
+  --color-primary: #fbf7f0; /* Beige claro */
+  --color-secondary: #fbf7f0; /* Marfil */
+  --color-accent: #fbf7f0; /* Arena suave */
+  --color-dark: #56705e; /* Verde oliva oscuro */
+  --color-gold: #b8860b; /* Dorado */
+
+  /* Fonts */
+  --font-display: 'Amoresa', 'Times New Roman', serif;
+  --font-sans: 'Marcellus', 'Arial', sans-serif;
+}
