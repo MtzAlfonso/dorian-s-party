@@ -1,9 +1,20 @@
-const LandingPage = () => {
+import { seed } from '../config/seed';
+
+export const LandingPage = () => {
   return (
-    <div className="bg-primary text-dark font-sans">
+    <>
       {/* Header Sticky */}
       <header className="fixed top-0 left-0 w-full bg-secondary drop-shadow-sm p-4 z-50">
         <nav className="container mx-auto flex justify-between items-center">
+          {import.meta.env.DEV && (
+            <button
+              className="text-xl font-bold bg-gold px-4 py-2 rounded-md
+              hover:bg-gold-dark transition-colors"
+              onClick={() => seed()}
+            >
+              SEED
+            </button>
+          )}
           <h1 className="text-xl font-bold">Mi Bautizo</h1>
           <ul className="flex gap-4">
             <li>
@@ -37,11 +48,9 @@ const LandingPage = () => {
       >
         <div>
           <h2 className="text-9xl font-extrabold font-display">
-            ¡Bienvenidos!
+            Dorian Nicolás
           </h2>
-          <p className="mt-4 text-2xl text-black">
-            Celebremos juntos este momento especial
-          </p>
+          <p className="mt-4 text-2xl text-black">Mi Bautizo 2025</p>
         </div>
       </section>
 
@@ -94,8 +103,6 @@ const LandingPage = () => {
       <footer className="bg-secondary text-center py-6">
         <p>&copy; 2025 Mi Bautizo. Todos los derechos reservados.</p>
       </footer>
-    </div>
+    </>
   );
 };
-
-export default LandingPage;
