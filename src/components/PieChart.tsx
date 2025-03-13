@@ -1,6 +1,6 @@
+import { FC } from 'react';
 import { ChartProps, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { FC } from 'react';
 
 // Registramos los elementos necesarios para Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -15,11 +15,11 @@ export const PieChart: FC<IPieChartProps> = ({ confirm, total }) => {
     labels: ['Confirmados', 'Pendientes'], // Etiquetas
     datasets: [
       {
-        label: 'Lenguajes de Programación',
+        label: 'Invitados',
         data: [confirm, total - confirm], // Datos
         backgroundColor: ['#10b981', '#f43f5e'], // Colores
         borderColor: ['#10b981', '#f43f5e'], // Bordes
-        borderWidth: 1,
+        borderWidth: 1, // Ancho de los bordes
       },
     ],
   };
@@ -28,21 +28,26 @@ export const PieChart: FC<IPieChartProps> = ({ confirm, total }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top',
+        position: 'bottom',
+        labels: {
+          font: {
+            family: 'Marcellus', // Cambia la fuente aquí
+            size: 14, // Tamaño de letra
+          },
+          color: '#374151', // Color del texto (gris oscuro)
+        },
       },
       tooltip: {
         callbacks: {
-          label: function (tooltipItem) {
-            return tooltipItem.label + ': ' + tooltipItem.raw + '%';
-          },
+          label: (tooltipItem) => `${tooltipItem.raw} invitados`,
         },
       },
     },
   };
 
   return (
-    <div className="flex justify-center justify-items-center p-8">
-      <div className="w-full max-w-md p-4">
+    <div className="flex justify-center w-full p-4">
+      <div className="w-full p-4">
         <div className="chart-container">
           <Pie data={data} options={options as never} />
         </div>

@@ -2,21 +2,21 @@ import { Link } from 'react-router';
 import { useFamilies } from '../hooks/useFamilies';
 import { motion } from 'framer-motion';
 import { PieChart } from '../components/PieChart';
+import { useAuth } from '../hooks/useAuth';
+import { Loader, LoginForm } from '../components';
 
 export const AdminPage = () => {
+  const { user, loading, loginWithEmail } = useAuth();
+
   const baseUrl = window.location.origin;
   const { isLoading, families } = useFamilies();
 
-  if (isLoading) {
-    return (
-      <motion.div
-        className="h-screen flex justify-center items-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-      >
-        Cargando...
-      </motion.div>
-    );
+  if (isLoading || loading) {
+    return <Loader />;
+  }
+
+  if (!user) {
+    return <LoginForm loginWithEmail={loginWithEmail} />;
   }
 
   if (!families) {
@@ -31,13 +31,13 @@ export const AdminPage = () => {
 
   return (
     <motion.section
-      className="container mx-auto"
+      className="container mx-auto pt-20 px-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      <h1 className="text-6xl font-bold text-center pt-8">Familias</h1>
+      <h1 className="text-5xl font-bold text-center pt-8">Invitados</h1>
 
-      <section className="flex justify-center my-8 flex-col text-center">
+      <section className="flex justify-center my-8 flex-col text-center text-xl">
         <p>Total de Invitados: {totalMembers}</p>
         <p>Confirmados: {confirmedMembers}</p>
         <PieChart confirm={confirmedMembers} total={totalMembers} />
@@ -48,8 +48,10 @@ export const AdminPage = () => {
           <li key={family.id} className="pb-5">
             <h2 className="text-2xl font-bold">{family.name}</h2>
             <section className="py-2">
-              <Link to={`/${family.id}`} className="text-blue-500 ">
-                {baseUrl}/{family.id}
+              <Link to={`/${family.id}`}>
+                <span className="text-blue-500 text-xs">
+                  {baseUrl}/{family.id}
+                </span>
               </Link>
             </section>
 

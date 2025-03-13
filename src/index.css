@@ -13,13 +13,19 @@
 }
 
 @theme {
-  --color-primary: #fbf7f0; /* Beige claro */
-  --color-secondary: #fbf7f0; /* Marfil */
-  --color-accent: #fbf7f0; /* Arena suave */
-  --color-dark: #56705e; /* Verde oliva oscuro */
-  --color-gold: #b8860b; /* Dorado */
+  --color-primary: #56705e; /* Beige claro */
+  --color-secondary: #b8860b; /* Dorado */
+  --color-light: #fbf7f0; /* Marfil */
+  --color-warm: #e6dfd3; /* Beige cálido */
+  --color-dark: #3d5746; /* Verde bosque */
+  --color-accent: #c99c1d; /* Dorado miel */
+  --color-neutral: #8c8472; /* Gris topo */
 
   /* Fonts */
   --font-display: 'Amoresa', 'Times New Roman', serif;
   --font-sans: 'Marcellus', 'Arial', sans-serif;
+}
+
+* {
+  scroll-behavior: smooth;
 }
