@@ -41,7 +41,7 @@ export const About = () => {
 
       <Link
         to={{ pathname: '/invite', search: `?code=${code}` }}
-        className="inline-block mt-12 bg-amber-300 text-dark py-4 px-10 rounded-lg text-lg shadow-2xl hover:bg-amber-400"
+        className="inline-block mt-12 bg-button text-dark py-4 px-10 rounded-lg text-lg shadow-2xl hover:bg-amber-400"
       >
         Confirmar asistencia
       </Link>
