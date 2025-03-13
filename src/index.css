@@ -20,7 +20,8 @@
   --color-dark: #3d5746; /* Verde bosque */
   --color-accent: #c99c1d; /* Dorado miel */
   --color-neutral: #8c8472; /* Gris topo */
-  --color-button: #d3e671; /* Beige claro */
+  --color-button: #d3e671;
+  --color-button-hover: #b8d576;
 
   /* Fonts */
   --font-display: 'Amoresa', 'Times New Roman', serif;
