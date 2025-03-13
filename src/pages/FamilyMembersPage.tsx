@@ -40,7 +40,7 @@ export const FamilyMembersPage = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      <h1 className="text-4xl leading-12 font-bold text-center">
+      <h1 className="text-4xl leading-12 font-bold text-center pt-8">
         {family.name}
       </h1>
 
