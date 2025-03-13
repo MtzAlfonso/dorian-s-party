@@ -6,7 +6,7 @@ import {
 
 export const Details = () => {
   return (
-    <section className="py-20 text-center px-4" id="event">
+    <section className="py-24 text-center px-4" id="event">
       <h2 className="text-3xl font-bold mb-4">Detalles de la misa</h2>
       <p className="font-extrabold flex justify-center items-center gap-2">
         <MdCalendarMonth className="text-xl" />

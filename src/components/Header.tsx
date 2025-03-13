@@ -21,7 +21,7 @@ export const Header = () => {
       <nav className="mx-auto flex justify-between items-center">
         <h1 className="text-xl font-bold">
           <Link to="/" className="hover:text-gold" onClick={scrollToTop}>
-            <div className="border-2 border-primary rounded-full py-2 px-4 flex gap-2 items-center">
+            <div className="border-2 border-primary rounded-full py-1 px-4 flex gap-2 items-center">
               <MdHome className="text-3xl inline" />
               {!isHome && <span className="text-sm">Más información</span>}
             </div>

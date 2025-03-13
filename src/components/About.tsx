@@ -1,6 +1,6 @@
 export const About = () => {
   return (
-    <section className="py-20 px-6 text-center bg-dark text-light" id="about">
+    <section className="py-24 px-6 text-center bg-dark text-light" id="about">
       <h2 className="text-4xl font-bold">¡Hola!</h2>
       <p className="mt-6 text-lg text-light">
         Nos llena de alegría compartir contigo un momento tan especial: el
