@@ -9,7 +9,7 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<LandingPage />} />
           <Route path="/admin" element={<AdminPage />} />
-          <Route path=":id" element={<FamilyMembersPage />} />
+          <Route path="/invite" element={<FamilyMembersPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

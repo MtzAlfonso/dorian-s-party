@@ -48,19 +48,42 @@ export const AdminPage = () => {
           <li key={family.id} className="pb-5">
             <h2 className="text-2xl font-bold">{family.name}</h2>
             <section className="py-2">
-              <Link to={`/${family.id}`}>
+              <Link
+                to={{
+                  pathname: '/',
+                  search: `?code=${family.id}`,
+                }}
+                onClick={() => window.scrollTo({ top: 0 })}
+              >
                 <span className="text-blue-500 text-xs">
-                  {baseUrl}/{family.id}
+                  {baseUrl}/?code={family.id}
                 </span>
               </Link>
             </section>
 
             <ul>
               {family.members.map((member) => (
-                <li key={member.name} className="flex gap-2 pl-4">
-                  <span>{flatMembers.indexOf(member) + 1}. </span>
-                  <span>{member.name}</span>
-                  <span>{member.confirmation ? '✅' : '❌'}</span>
+                <li
+                  key={member.name}
+                  className="flex gap-2 pl-4 justify-between py-1"
+                >
+                  <div>
+                    <span>{flatMembers.indexOf(member) + 1}. </span>
+                    <span>{member.name}</span>
+                  </div>
+                  <span>
+                    {member.confirmation ? (
+                      // Tags
+                      <span className="border border-teal-500 text-teal-800 bg-teal-100 rounded-full px-2 py-1 text-xs">
+                        Confirmado
+                      </span>
+                    ) : (
+                      // Tags
+                      <span className="border border-red-500 text-red-800 bg-red-100 rounded-full px-2 py-1 text-xs">
+                        Sin confirmar
+                      </span>
+                    )}
+                  </span>
                 </li>
               ))}
             </ul>

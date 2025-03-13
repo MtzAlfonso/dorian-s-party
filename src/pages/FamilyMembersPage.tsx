@@ -1,18 +1,19 @@
-import { useParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { useFamily } from '../hooks/useFamily';
 import { Card, Loader } from '../components';
 import { motion } from 'framer-motion';
 
 export const FamilyMembersPage = () => {
-  const { id } = useParams();
+  const [params] = useSearchParams();
+  const code = params.get('code') || '';
 
-  const { family, isLoading, updateFamily, isUpdating } = useFamily(id);
+  const { family, isLoading, updateFamily, isUpdating } = useFamily(code);
 
   const handleConfirmation = async (
     memberName: string,
     confirmation: boolean
   ) => {
-    await updateFamily(id!, {
+    await updateFamily(code!, {
       ...family!,
       members: family!.members.map((member) =>
         member.name === memberName ? { ...member, confirmation } : member

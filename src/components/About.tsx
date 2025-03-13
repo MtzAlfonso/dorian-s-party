@@ -1,4 +1,9 @@
+import { Link, useSearchParams } from 'react-router';
+
 export const About = () => {
+  const [searchParams] = useSearchParams();
+  const code = searchParams.get('code') || '123';
+
   return (
     <section className="py-24 px-6 text-center bg-dark text-light" id="about">
       <h2 className="text-4xl font-bold">¡Hola!</h2>
@@ -33,6 +38,13 @@ export const About = () => {
       <p className="mt-6 text-3xl text-light font-bold cursor-pointer">
         ¡Te esperamos!
       </p>
+
+      <Link
+        to={{ pathname: '/invite', search: `?code=${code}` }}
+        className="inline-block mt-12 bg-amber-300 text-dark py-4 px-10 rounded-lg text-lg shadow-2xl hover:bg-amber-400"
+      >
+        Confirmar asistencia
+      </Link>
     </section>
   );
 };

@@ -1,10 +1,12 @@
-import { Link, useLocation } from 'react-router';
+import { Link, useLocation, useSearchParams } from 'react-router';
 import { MdHome, MdLogout } from 'react-icons/md';
 import { useAuth } from '../hooks/useAuth';
 
 export const Header = () => {
   const location = useLocation();
+  const [params] = useSearchParams();
   const { user, logout } = useAuth();
+  const code = params.get('code') || '';
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -20,10 +22,17 @@ export const Header = () => {
     <header className="fixed top-0 w-full max-w-2xl bg-warm drop-shadow-sm p-4 z-50 text-dark">
       <nav className="mx-auto flex justify-between items-center">
         <h1 className="text-xl font-bold">
-          <Link to="/" className="hover:text-gold" onClick={scrollToTop}>
+          <Link
+            to={{
+              pathname: '/',
+              search: `?code=${code}`,
+            }}
+            className="hover:text-gold"
+            onClick={scrollToTop}
+          >
             <div className="border-2 border-primary rounded-full py-1 px-4 flex gap-2 items-center">
               <MdHome className="text-3xl inline" />
-              {!isHome && <span className="text-sm">Más información</span>}
+              {!isHome && <span className="text-sm">Volver al inicio</span>}
             </div>
           </Link>
         </h1>
