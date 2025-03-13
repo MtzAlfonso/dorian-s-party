@@ -33,7 +33,7 @@ export const Card: FC<ICardProps> = ({ member, onConfirm, loading }) => {
         <button
           onClick={() => handleConfirmation(true)}
           className={twMerge([
-            'p-2 h-10 w-10 rounded-md cursor-pointer',
+            'p-2 h-10 w-10 rounded-md cursor-pointer flex justify-center items-center mx-auto',
             stateMember.confirmation
               ? 'bg-teal-600 text-white hover:bg-teal-700'
               : 'border border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white',
@@ -44,7 +44,7 @@ export const Card: FC<ICardProps> = ({ member, onConfirm, loading }) => {
         <button
           onClick={() => handleConfirmation(false)}
           className={twMerge([
-            'p-2 h-10 w-10 rounded-md cursor-pointer',
+            'p-2 h-10 w-10 rounded-md cursor-pointer flex justify-center items-center mx-auto',
             stateMember.confirmation
               ? 'border border-red-600 text-red-600 hover:bg-red-600 hover:text-white'
               : 'bg-red-600 text-white hover:bg-red-700',
