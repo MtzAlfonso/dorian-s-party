@@ -55,7 +55,7 @@ export const FamilyMembersPage = () => {
         ))}
       </ul>
 
-      <p className="text-center mt-8 text-xl italic text-red-600 w-5/6 mx-auto">
+      <p className="text-center my-8 text-xl italic text-red-600 w-5/6 mx-auto">
         Debido a la capacidad del evento, solo podrán asistir las personas
         indicadas en la invitación. Agradecemos su comprensión.
       </p>
