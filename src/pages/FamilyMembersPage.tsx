@@ -43,6 +43,7 @@ export const FamilyMembersPage = () => {
       <h1 className="text-4xl leading-12 font-bold text-center">
         {family.name}
       </h1>
+
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-8">
         {family.members.map((member) => (
           <Card
@@ -53,6 +54,11 @@ export const FamilyMembersPage = () => {
           />
         ))}
       </ul>
+
+      <p className="text-center mt-8 text-xl italic text-red-600 w-5/6 mx-auto">
+        Debido a la capacidad del evento, solo podrán asistir las personas
+        indicadas en la invitación. Agradecemos su comprensión.
+      </p>
     </motion.section>
   );
 };
