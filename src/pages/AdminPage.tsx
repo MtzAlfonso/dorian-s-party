@@ -4,12 +4,29 @@ import { motion } from 'framer-motion';
 import { PieChart } from '../components/PieChart';
 import { useAuth } from '../hooks/useAuth';
 import { Loader, LoginForm } from '../components';
+import { MdCopyAll } from 'react-icons/md';
+import { useCopyToClipboard } from 'react-use';
+import { generateTemplate } from '../utils';
+import { useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 export const AdminPage = () => {
   const { user, loading, loginWithEmail } = useAuth();
+  const [state, copyToClipboard] = useCopyToClipboard();
 
   const baseUrl = window.location.origin;
   const { isLoading, families } = useFamilies();
+
+  useEffect(() => {
+    if (state.value) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Mensaje copiado',
+        text: 'El mensaje ha sido copiado al portapapeles',
+        confirmButtonColor: '#56705e',
+      });
+    }
+  }, [state]);
 
   if (isLoading || loading) {
     return <Loader />;
@@ -29,6 +46,10 @@ export const AdminPage = () => {
     (member) => member.confirmation
   ).length;
 
+  const handleCopy = (code: string) => {
+    copyToClipboard(generateTemplate(code));
+  };
+
   return (
     <motion.section
       className="container mx-auto pt-20 px-4"
@@ -47,6 +68,15 @@ export const AdminPage = () => {
         {families.map((family) => (
           <li key={family.id} className="pb-5">
             <h2 className="text-2xl font-bold">{family.name}</h2>
+            <section className="flex gap-4 py-2 items-center">
+              <p>Mensaje de invitación</p>
+              <button
+                className="cursor-pointer bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600"
+                onClick={() => handleCopy(family.id)}
+              >
+                <MdCopyAll />
+              </button>
+            </section>
             <section className="py-2">
               <Link
                 to={{
