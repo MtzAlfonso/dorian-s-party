@@ -9,6 +9,7 @@ import { useCopyToClipboard } from 'react-use';
 import { generateTemplate } from '../utils';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
+import { IMember } from '../interfaces/firebase.interfaces';
 
 export const AdminPage = () => {
   const { user, loading, loginWithEmail } = useAuth();
@@ -41,10 +42,12 @@ export const AdminPage = () => {
   }
 
   const flatMembers = families.flatMap((family) => family.members);
-  const totalMembers = flatMembers.length;
-  const confirmedMembers = flatMembers.filter(
-    (member) => member.confirmation
-  ).length;
+
+  const isNotChildren = (member: IMember) => !member.isChildren;
+  const isConfirmed = (member: IMember) => member.confirmation;
+
+  const totalMembers = flatMembers.filter(isNotChildren).length;
+  const confirmedMembers = flatMembers.filter(isConfirmed).length;
 
   const handleCopy = (code: string) => {
     copyToClipboard(generateTemplate(code));
@@ -80,13 +83,13 @@ export const AdminPage = () => {
             <section className="py-2">
               <Link
                 to={{
-                  pathname: '/',
+                  pathname: '/invite',
                   search: `?code=${family.id}`,
                 }}
                 onClick={() => window.scrollTo({ top: 0 })}
               >
                 <span className="text-blue-500 text-xs">
-                  {baseUrl}/?code={family.id}
+                  {baseUrl}/invite?code={family.id}
                 </span>
               </Link>
             </section>
@@ -97,10 +100,7 @@ export const AdminPage = () => {
                   key={member.name}
                   className="flex gap-2 pl-4 justify-between py-1"
                 >
-                  <div>
-                    <span>{flatMembers.indexOf(member) + 1}. </span>
-                    <span>{member.name}</span>
-                  </div>
+                  <span> - {member.name}</span>
                   <span>
                     {member.confirmation ? (
                       // Tags

@@ -1,6 +1,7 @@
 export interface IMember {
   name: string;
   confirmation: boolean;
+  isChildren: boolean;
 }
 
 export interface IFamily {
