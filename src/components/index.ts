@@ -1,5 +1,6 @@
 export * from './About';
 export * from './Card';
+export * from './Contact';
 export * from './Details';
 export * from './Footer';
 export * from './Header';
