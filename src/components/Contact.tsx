@@ -15,7 +15,8 @@ export const Contact = () => {
           className="text-lg flex items-center gap-2"
         >
           <MdWhatsapp className="text-3xl text-green-500" />
-          <p className="text-lg">55 8298 4615</p>
+          <p className="text-xl">55 8298 4615</p>
+          <p className="text-md text-gray-400">&#40; Lisbet &#41;</p>
         </a>
       </section>
       <section className="flex items-center justify-center mt-4 gap-2">
@@ -26,7 +27,8 @@ export const Contact = () => {
           className="text-lg flex items-center gap-2"
         >
           <MdWhatsapp className="text-3xl text-green-500" />
-          <p className="text-lg">56 1265 2369</p>
+          <p className="text-xl">56 1265 2369</p>
+          <p className="text-md text-gray-400">&#40; Alfonso &#41;</p>
         </a>
       </section>
     </section>
