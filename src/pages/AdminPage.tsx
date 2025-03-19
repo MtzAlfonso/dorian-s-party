@@ -1,33 +1,15 @@
-import { Link } from 'react-router';
 import { useFamilies } from '../hooks/useFamilies';
 import { motion } from 'framer-motion';
 import { PieChart } from '../components/PieChart';
 import { useAuth } from '../hooks/useAuth';
-import { Loader, LoginForm } from '../components';
-import { MdCopyAll } from 'react-icons/md';
-import { useCopyToClipboard } from 'react-use';
-import { generateTemplate } from '../utils';
-import { useEffect } from 'react';
-import Swal from 'sweetalert2';
+import { FamilyList, Loader, LoginForm } from '../components';
 import { IMember } from '../interfaces/firebase.interfaces';
 
 export const AdminPage = () => {
   const { user, loading, loginWithEmail } = useAuth();
-  const [state, copyToClipboard] = useCopyToClipboard();
 
-  const baseUrl = window.location.origin;
-  const { isLoading, families } = useFamilies();
-
-  useEffect(() => {
-    if (state.value) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Mensaje copiado',
-        text: 'El mensaje ha sido copiado al portapapeles',
-        confirmButtonColor: '#56705e',
-      });
-    }
-  }, [state]);
+  const { isLoading, families, confimartedFamilies, pendingFamilies } =
+    useFamilies();
 
   if (isLoading || loading) {
     return <Loader />;
@@ -49,9 +31,42 @@ export const AdminPage = () => {
   const totalMembers = flatMembers.filter(isNotChildren).length;
   const confirmedMembers = flatMembers.filter(isConfirmed).length;
 
-  const handleCopy = (code: string) => {
-    copyToClipboard(generateTemplate(code));
-  };
+  interface IGrouppedFamilies {
+    [key: string]: IFamily[];
+  }
+
+  interface IFamily {
+    familyName: string;
+    members: IMember[];
+    totalMembers: number;
+  }
+
+  const groupedFamilies = confimartedFamilies?.reduce<IGrouppedFamilies>(
+    (acc, family) => {
+      const members = family.members.filter(isNotChildren).filter(isConfirmed);
+      const membersCount = members.length;
+      const familyName = family.name;
+
+      if (membersCount === 0) {
+        return acc;
+      }
+
+      if (!acc[membersCount]) {
+        acc[membersCount] = [];
+      }
+
+      acc[membersCount].push({
+        familyName,
+        members,
+        totalMembers: membersCount,
+      });
+
+      return acc;
+    },
+    {}
+  );
+
+  console.log(groupedFamilies);
 
   return (
     <motion.section
@@ -67,59 +82,33 @@ export const AdminPage = () => {
         <PieChart confirm={confirmedMembers} total={totalMembers} />
       </section>
 
-      <ul>
-        {families.map((family) => (
-          <li key={family.id} className="pb-5">
-            <h2 className="text-2xl font-bold">{family.name}</h2>
-            <section className="flex gap-4 py-2 items-center">
-              <p>Mensaje de invitación</p>
-              <button
-                className="cursor-pointer bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600"
-                onClick={() => handleCopy(family.id)}
-              >
-                <MdCopyAll />
-              </button>
-            </section>
-            <section className="py-2">
-              <Link
-                to={{
-                  pathname: '/invite',
-                  search: `?code=${family.id}`,
-                }}
-                onClick={() => window.scrollTo({ top: 0 })}
-              >
-                <span className="text-blue-500 text-xs">
-                  {baseUrl}/invite?code={family.id}
-                </span>
-              </Link>
-            </section>
+      <section>
+        <hr className="mb-8" />
+        <h2 className="text-2xl font-bold mb-4">Grupos de confirmados</h2>
+        <ul>
+          {Object.entries(groupedFamilies || {})
+            .reverse()
+            .map(([key, families]) => (
+              <li key={key} className="pb-2">
+                <h3 className="flex gap-2">
+                  <strong className="text-xl font-bold">
+                    {families.length}
+                  </strong>
+                  <span>familias de</span>
+                  <strong className="text-xl font-bold">
+                    {families[0].totalMembers}
+                  </strong>
+                  <span>{key === '1' ? 'persona' : 'personas'}</span>
+                </h3>
+              </li>
+            ))}
+        </ul>
+        <hr className="my-8" />
+      </section>
 
-            <ul>
-              {family.members.map((member) => (
-                <li
-                  key={member.name}
-                  className="flex gap-2 pl-4 justify-between py-1"
-                >
-                  <span> - {member.name}</span>
-                  <span>
-                    {member.confirmation ? (
-                      // Tags
-                      <span className="border border-teal-500 text-teal-800 bg-teal-100 rounded-full px-2 py-1 text-xs">
-                        Confirmado
-                      </span>
-                    ) : (
-                      // Tags
-                      <span className="border border-red-500 text-red-800 bg-red-100 rounded-full px-2 py-1 text-xs">
-                        Sin confirmar
-                      </span>
-                    )}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
+      <FamilyList title="Confirmados" families={confimartedFamilies} />
+      <hr className="my-8" />
+      <FamilyList title="Pendientes" families={pendingFamilies} />
     </motion.section>
   );
 };

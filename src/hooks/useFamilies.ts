@@ -15,11 +15,8 @@ export const useFamilies = () => {
         ...(doc.data() as IFamily),
         id: doc.id,
       }));
-      const sortedMembers = members.toSorted((a, b) =>
-        a.name.localeCompare(b.name)
-      );
 
-      setFamilies(sortedMembers);
+      setFamilies(members);
     } catch (error) {
       console.error('Error getting documents: ', error);
     } finally {
@@ -31,8 +28,53 @@ export const useFamilies = () => {
     getFamilies();
   }, [getFamilies]);
 
+  const confirmatedFamilies = families?.filter((family) =>
+    family.members.some((member) => member.confirmation)
+  );
+
+  const sortedConfirmedFamilies = confirmatedFamilies?.toSorted((a, b) => {
+    if (
+      a.members.filter((member) => !member.isChildren).length >
+      b.members.filter((member) => !member.isChildren).length
+    ) {
+      return -1;
+    }
+    if (
+      a.members.filter((member) => !member.isChildren).length <
+      b.members.filter((member) => !member.isChildren).length
+    ) {
+      return 1;
+    }
+    return a.name.localeCompare(b.name);
+  });
+
+  const pendingFamilies = families?.filter(
+    (family) => !family.members.some((member) => member.confirmation)
+  );
+
+  const sortedPendingFamilies = pendingFamilies?.toSorted((a, b) => {
+    if (
+      a.members.filter((member) => !member.isChildren).length >
+      b.members.filter((member) => !member.isChildren).length
+    ) {
+      return -1;
+    }
+    if (
+      a.members.filter((member) => !member.isChildren).length <
+      b.members.filter((member) => !member.isChildren).length
+    ) {
+      return 1;
+    }
+    return a.name.localeCompare(b.name);
+  });
+
   return {
-    families,
+    families: [
+      ...(sortedConfirmedFamilies || []),
+      ...(sortedPendingFamilies || []),
+    ],
+    confimartedFamilies: sortedConfirmedFamilies,
+    pendingFamilies: sortedPendingFamilies,
     isLoading,
   };
 };
