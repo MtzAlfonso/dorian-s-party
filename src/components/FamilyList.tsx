@@ -49,15 +49,6 @@ export const FamilyList: FC<IFamilyListProps> = ({ title, families = [] }) => {
               {family.members.length}{' '}
               {family.members.length === 1 ? 'invitado' : 'invitados'}
             </span>
-            <section className="flex gap-1 items-center my-2">
-              {family.tags
-                ? family.tags?.map((tag) => (
-                    <Tag key={tag} variant="info">
-                      {tag}
-                    </Tag>
-                  ))
-                : 'Sin etiquetas'}
-            </section>
             <section className="flex gap-4 py-2 items-center">
               <p>Copiar invitación</p>
               <button

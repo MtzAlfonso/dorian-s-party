@@ -182,6 +182,17 @@ export const AdminPage = () => {
           ]}
           datasets={[
             {
+              label: 'Pendientes',
+              data: [
+                totalPendingMembersByTag(lisFamilies),
+                totalPendingMembersByTag(lisFriends),
+                totalPendingMembersByTag(ponchoFamilies),
+                totalPendingMembersByTag(ponchoFriends),
+              ],
+              backgroundColor: '#D70654',
+              stack: 'stack1',
+            },
+            {
               label: 'Confirmados',
               data: [
                 totalConfirmatedMembersByTag(lisFamilies),
@@ -190,17 +201,6 @@ export const AdminPage = () => {
                 totalConfirmatedMembersByTag(ponchoFriends),
               ],
               backgroundColor: '#9DC08B',
-              stack: 'stack1',
-            },
-            {
-              label: 'Pendientes',
-              data: [
-                -totalPendingMembersByTag(lisFamilies),
-                -totalPendingMembersByTag(lisFriends),
-                -totalPendingMembersByTag(ponchoFamilies),
-                -totalPendingMembersByTag(ponchoFriends),
-              ],
-              backgroundColor: '#D70654',
               stack: 'stack1',
             },
           ]}
