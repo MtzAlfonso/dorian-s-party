@@ -110,15 +110,19 @@ export const AdminPage = () => {
       <section className="flex justify-center my-8 flex-col text-center text-xl">
         <p>Total de Invitados: {totalMembers}</p>
         <p>Confirmados: {confirmedMembers}</p>
-        <PieChart
-          items={[confirmedMembers, totalMembers - confirmedMembers]}
-          labels={['Confirmados', 'Pendientes']}
-        />
+
+        <div className="flex justify-center py-8">
+          <PieChart
+            items={[confirmedMembers, totalMembers - confirmedMembers]}
+            labels={['Confirmados', 'Pendientes']}
+          />
+        </div>
       </section>
+
+      <hr className="py-8" />
 
       <section className="text-center">
         <div className="mb-10">
-          <hr className="mb-8" />
           <h2 className="text-3xl font-bold">Familias confirmadas</h2>
           <p>
             {confimartedFamilies?.length ?? 0} / {families.length} familias han
@@ -148,6 +152,10 @@ export const AdminPage = () => {
       </section>
 
       <section>
+        <h2 className="text-3xl font-bold text-center">
+          Invitados por familia
+        </h2>
+
         <PieChart
           items={[
             totalMembersByTag(lisFamilies),

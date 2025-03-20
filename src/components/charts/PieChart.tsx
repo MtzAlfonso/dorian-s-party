@@ -50,12 +50,8 @@ export const PieChart: FC<IPieChartProps> = ({
   };
 
   return (
-    <div className="flex justify-center w-full p-4">
-      <div className="w-full p-4">
-        <div className="chart-container">
-          <Pie data={data} options={options as never} />
-        </div>
-      </div>
+    <div className="flex justify-center w-full">
+      <Pie data={data} options={options as never} />
     </div>
   );
 };

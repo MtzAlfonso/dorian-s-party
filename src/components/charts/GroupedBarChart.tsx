@@ -78,7 +78,7 @@ export const GroupedBarChart: FC<IGroupedBarChartProps> = ({
   };
 
   return (
-    <div className="flex justify-center w-full p-4">
+    <div className="flex justify-center w-full">
       <Bar data={data} options={options as never} />
     </div>
   );
