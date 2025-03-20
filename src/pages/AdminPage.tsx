@@ -90,7 +90,7 @@ export const AdminPage = () => {
 
       <section className="text-center">
         <hr className="mb-8" />
-        <h2 className="text-3xl font-bold mb-4">Familias confirmadas</h2>
+        <h2 className="text-3xl font-bold mb-10">Familias confirmadas</h2>
 
         <article>
           {groupedFamiliesEntries.map(([key, families]) => (
@@ -112,7 +112,6 @@ export const AdminPage = () => {
           labels={groupedFamiliesLabels.map((label) => `Familia de ${label}`)}
           items={groupedFamiliesItems}
         />
-
         <hr className="my-8" />
       </section>
 
