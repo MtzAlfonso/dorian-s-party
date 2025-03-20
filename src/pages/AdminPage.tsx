@@ -72,9 +72,7 @@ export const AdminPage = () => {
   const groupedFamiliesItems = Object.values(groupedFamilies || {}).map(
     (families) => families.length
   );
-  const groupedFamiliesEntries = Object.entries(
-    groupedFamilies || {}
-  ).reverse();
+  const groupedFamiliesEntries = Object.entries(groupedFamilies || {});
 
   return (
     <motion.section
