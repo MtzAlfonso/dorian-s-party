@@ -53,11 +53,9 @@ export const DoughnutChart: FC<IDoughnutChartProps> = ({
   };
 
   return (
-    <div className="flex justify-center w-full p-1">
+    <div className="flex justify-center w-full p-0 m-0">
       <div className="w-full p-1">
-        <div className="chart-container">
-          <Doughnut data={data} options={options as never} />
-        </div>
+        <Doughnut data={data} options={options as never} />
       </div>
     </div>
   );
