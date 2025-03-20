@@ -30,7 +30,8 @@ export const FamilyList: FC<IFamilyListProps> = ({ title, families = [] }) => {
   };
 
   const totalMembers = families.reduce(
-    (acc, family) => acc + family.members.length,
+    (acc, family) =>
+      acc + family.members.filter((member) => !member.isChildren).length,
     0
   );
 

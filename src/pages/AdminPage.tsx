@@ -2,7 +2,7 @@ import { useFamilies } from '../hooks/useFamilies';
 import { motion } from 'framer-motion';
 import { PieChart } from '../components/PieChart';
 import { useAuth } from '../hooks/useAuth';
-import { FamilyList, Loader, LoginForm } from '../components';
+import { DoughnutChart, FamilyList, Loader, LoginForm } from '../components';
 import { IMember } from '../interfaces/firebase.interfaces';
 
 export const AdminPage = () => {
@@ -29,7 +29,9 @@ export const AdminPage = () => {
   const isConfirmed = (member: IMember) => member.confirmation;
 
   const totalMembers = flatMembers.filter(isNotChildren).length;
-  const confirmedMembers = flatMembers.filter(isConfirmed).length;
+  const confirmedMembers = flatMembers
+    .filter(isNotChildren)
+    .filter(isConfirmed).length;
 
   interface IGrouppedFamilies {
     [key: string]: IFamily[];
@@ -66,7 +68,13 @@ export const AdminPage = () => {
     {}
   );
 
-  console.log(groupedFamilies);
+  const groupedFamiliesLabels = Object.keys(groupedFamilies || {});
+  const groupedFamiliesItems = Object.values(groupedFamilies || {}).map(
+    (families) => families.length
+  );
+  const groupedFamiliesEntries = Object.entries(
+    groupedFamilies || {}
+  ).reverse();
 
   return (
     <motion.section
@@ -82,27 +90,28 @@ export const AdminPage = () => {
         <PieChart confirm={confirmedMembers} total={totalMembers} />
       </section>
 
-      <section>
+      <section className="text-center">
         <hr className="mb-8" />
         <h2 className="text-2xl font-bold mb-4">Grupos de confirmados</h2>
-        <ul>
-          {Object.entries(groupedFamilies || {})
-            .reverse()
-            .map(([key, families]) => (
-              <li key={key} className="pb-2">
-                <h3 className="flex gap-2">
-                  <strong className="text-xl font-bold">
-                    {families.length}
-                  </strong>
-                  <span>familias de</span>
-                  <strong className="text-xl font-bold">
-                    {families[0].totalMembers}
-                  </strong>
-                  <span>{key === '1' ? 'persona' : 'personas'}</span>
-                </h3>
-              </li>
-            ))}
-        </ul>
+        <article>
+          {groupedFamiliesEntries.map(([key, families]) => (
+            <section key={key} className="pb-2 flex justify-center">
+              <h3 className="flex gap-2">
+                <strong className="text-xl font-bold">{families.length}</strong>
+                <span>familias de</span>
+                <strong className="text-xl font-bold">
+                  {families[0].totalMembers}
+                </strong>
+                <span>{key === '1' ? 'persona' : 'personas'}</span>
+              </h3>
+            </section>
+          ))}
+        </article>
+        <DoughnutChart
+          title="Confirmadas"
+          labels={groupedFamiliesLabels.map((label) => `Familia de ${label}`)}
+          items={groupedFamiliesItems}
+        />
         <hr className="my-8" />
       </section>
 

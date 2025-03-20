@@ -17,8 +17,8 @@ export const PieChart: FC<IPieChartProps> = ({ confirm, total }) => {
       {
         label: 'Invitados',
         data: [confirm, total - confirm], // Datos
-        backgroundColor: ['#10b981', '#f43f5e'], // Colores
-        borderColor: ['#10b981', '#f43f5e'], // Bordes
+        backgroundColor: ['#9DC08B', '#D70654'], // Colores
+        borderColor: ['#9DC08B', '#D70654'], // Bordes
         borderWidth: 1, // Ancho de los bordes
       },
     ],

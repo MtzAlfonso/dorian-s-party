@@ -2,6 +2,7 @@ export * from './About';
 export * from './Card';
 export * from './Contact';
 export * from './Details';
+export * from './DoughnuChart';
 export * from './FamilyList';
 export * from './Footer';
 export * from './Header';
