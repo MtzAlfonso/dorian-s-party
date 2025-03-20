@@ -6,20 +6,29 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface IPieChartProps {
-  confirm: number;
-  total: number;
+  items: number[];
+  labels: string[];
+  dataLabel?: string;
+  colors?: string[];
+  legendPosition?: 'bottom' | 'left' | 'top' | 'right' | 'center' | 'chartArea';
 }
 
-export const PieChart: FC<IPieChartProps> = ({ confirm, total }) => {
+export const PieChart: FC<IPieChartProps> = ({
+  items,
+  labels,
+  dataLabel = 'Invitados',
+  colors = ['#9DC08B', '#D70654'],
+  legendPosition = 'bottom',
+}) => {
   const data = {
-    labels: ['Confirmados', 'Pendientes'], // Etiquetas
+    labels,
     datasets: [
       {
-        label: 'Invitados',
-        data: [confirm, total - confirm], // Datos
-        backgroundColor: ['#9DC08B', '#D70654'], // Colores
-        borderColor: ['#9DC08B', '#D70654'], // Bordes
-        borderWidth: 1, // Ancho de los bordes
+        label: dataLabel,
+        data: items,
+        backgroundColor: colors,
+        borderColor: colors,
+        borderWidth: 1,
       },
     ],
   };
@@ -28,18 +37,13 @@ export const PieChart: FC<IPieChartProps> = ({ confirm, total }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: 'bottom',
+        position: legendPosition,
         labels: {
           font: {
-            family: 'Marcellus', // Cambia la fuente aquí
-            size: 14, // Tamaño de letra
+            family: 'Marcellus',
+            size: 14,
           },
-          color: '#374151', // Color del texto (gris oscuro)
-        },
-      },
-      tooltip: {
-        callbacks: {
-          label: (tooltipItem) => `${tooltipItem.raw} invitados`,
+          color: '#374151',
         },
       },
     },

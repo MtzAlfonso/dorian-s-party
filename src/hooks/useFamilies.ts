@@ -68,6 +68,26 @@ export const useFamilies = () => {
     return a.name.localeCompare(b.name);
   });
 
+  const lisFamilies =
+    families
+      ?.filter((family) => family?.tags?.includes('LIS'))
+      .filter((family) => family?.tags?.includes('FAMILIA')) || [];
+
+  const lisFriends =
+    families
+      ?.filter((family) => family?.tags?.includes('LIS'))
+      .filter((family) => family?.tags?.includes('AMIGOS')) || [];
+
+  const ponchoFamilies =
+    families
+      ?.filter((family) => family?.tags?.includes('PONCHO'))
+      .filter((family) => family?.tags?.includes('FAMILIA')) || [];
+
+  const ponchoFriends =
+    families
+      ?.filter((family) => family?.tags?.includes('PONCHO'))
+      .filter((family) => family?.tags?.includes('AMIGOS')) || [];
+
   return {
     families: [
       ...(sortedConfirmedFamilies || []),
@@ -75,6 +95,10 @@ export const useFamilies = () => {
     ],
     confimartedFamilies: sortedConfirmedFamilies,
     pendingFamilies: sortedPendingFamilies,
+    lisFamilies,
+    lisFriends,
+    ponchoFamilies,
+    ponchoFriends,
     isLoading,
   };
 };

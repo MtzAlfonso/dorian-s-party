@@ -9,4 +9,5 @@ export interface IFamily {
   slug: string;
   name: string;
   members: IMember[];
+  tags?: string[];
 }

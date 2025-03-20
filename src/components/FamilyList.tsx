@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { generateTemplate } from '../utils';
 import { MdCopyAll } from 'react-icons/md';
 import { Link } from 'react-router';
+import { Tag } from './Tag';
 
 interface IFamilyListProps {
   title: string;
@@ -48,6 +49,15 @@ export const FamilyList: FC<IFamilyListProps> = ({ title, families = [] }) => {
               {family.members.length}{' '}
               {family.members.length === 1 ? 'invitado' : 'invitados'}
             </span>
+            <section className="flex gap-1 items-center my-2">
+              {family.tags
+                ? family.tags?.map((tag) => (
+                    <Tag key={tag} variant="info">
+                      {tag}
+                    </Tag>
+                  ))
+                : 'Sin etiquetas'}
+            </section>
             <section className="flex gap-4 py-2 items-center">
               <p>Copiar invitación</p>
               <button
@@ -63,7 +73,6 @@ export const FamilyList: FC<IFamilyListProps> = ({ title, families = [] }) => {
                   pathname: '/invite',
                   search: `?code=${family.id}`,
                 }}
-                onClick={() => window.scrollTo({ top: 0 })}
               >
                 <span className="text-blue-500 text-xs">Ver invitación</span>
               </Link>
@@ -78,15 +87,9 @@ export const FamilyList: FC<IFamilyListProps> = ({ title, families = [] }) => {
                   <span> - {member.name}</span>
                   <span>
                     {member.confirmation ? (
-                      // Tags
-                      <span className="border border-teal-500 text-teal-800 bg-teal-100 rounded-full px-2 py-1 text-xs">
-                        Confirmado
-                      </span>
+                      <Tag variant="success">Confirmado</Tag>
                     ) : (
-                      // Tags
-                      <span className="border border-red-500 text-red-800 bg-red-100 rounded-full px-2 py-1 text-xs">
-                        Sin confirmar
-                      </span>
+                      <Tag variant="danger">No confirmado</Tag>
                     )}
                   </span>
                 </li>

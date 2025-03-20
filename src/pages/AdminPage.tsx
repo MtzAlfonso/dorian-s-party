@@ -1,15 +1,39 @@
 import { useFamilies } from '../hooks/useFamilies';
 import { motion } from 'framer-motion';
-import { PieChart } from '../components/PieChart';
+import { PieChart } from '../components/charts/PieChart';
 import { useAuth } from '../hooks/useAuth';
-import { DoughnutChart, FamilyList, Loader, LoginForm } from '../components';
-import { IMember } from '../interfaces/firebase.interfaces';
+import {
+  DoughnutChart,
+  FamilyList,
+  GroupedBarChart,
+  Loader,
+  LoginForm,
+} from '../components';
+import { IFamily, IMember } from '../interfaces/firebase.interfaces';
+
+interface IGrouppedFamilies {
+  [key: string]: IFamilyGroup[];
+}
+
+interface IFamilyGroup {
+  familyName: string;
+  members: IMember[];
+  totalMembers: number;
+}
 
 export const AdminPage = () => {
   const { user, loading, loginWithEmail } = useAuth();
 
-  const { isLoading, families, confimartedFamilies, pendingFamilies } =
-    useFamilies();
+  const {
+    isLoading,
+    families,
+    confimartedFamilies,
+    pendingFamilies,
+    lisFamilies,
+    lisFriends,
+    ponchoFamilies,
+    ponchoFriends,
+  } = useFamilies();
 
   if (isLoading || loading) {
     return <Loader />;
@@ -33,25 +57,13 @@ export const AdminPage = () => {
     .filter(isNotChildren)
     .filter(isConfirmed).length;
 
-  interface IGrouppedFamilies {
-    [key: string]: IFamily[];
-  }
-
-  interface IFamily {
-    familyName: string;
-    members: IMember[];
-    totalMembers: number;
-  }
-
   const groupedFamilies = confimartedFamilies?.reduce<IGrouppedFamilies>(
     (acc, family) => {
       const members = family.members.filter(isNotChildren).filter(isConfirmed);
       const membersCount = members.length;
       const familyName = family.name;
 
-      if (membersCount === 0) {
-        return acc;
-      }
+      if (membersCount === 0) return acc;
 
       if (!acc[membersCount]) {
         acc[membersCount] = [];
@@ -74,6 +86,19 @@ export const AdminPage = () => {
   );
   const groupedFamiliesEntries = Object.entries(groupedFamilies || {});
 
+  const totalConfirmatedMembersByTag = (families: IFamily[] = []) =>
+    families
+      ?.flatMap((family) => family.members.filter(isNotChildren))
+      .filter(isConfirmed).length;
+
+  const totalPendingMembersByTag = (families: IFamily[] = []) =>
+    families
+      ?.flatMap((family) => family.members.filter(isNotChildren))
+      .filter((member) => !member.confirmation).length;
+
+  const totalMembersByTag = (families: IFamily[] = []) =>
+    families?.flatMap((family) => family.members.filter(isNotChildren)).length;
+
   return (
     <motion.section
       className="container mx-auto pt-20 px-4"
@@ -85,22 +110,29 @@ export const AdminPage = () => {
       <section className="flex justify-center my-8 flex-col text-center text-xl">
         <p>Total de Invitados: {totalMembers}</p>
         <p>Confirmados: {confirmedMembers}</p>
-        <PieChart confirm={confirmedMembers} total={totalMembers} />
+        <PieChart
+          items={[confirmedMembers, totalMembers - confirmedMembers]}
+          labels={['Confirmados', 'Pendientes']}
+        />
       </section>
 
       <section className="text-center">
-        <hr className="mb-8" />
-        <h2 className="text-3xl font-bold mb-10">Familias confirmadas</h2>
+        <div className="mb-10">
+          <hr className="mb-8" />
+          <h2 className="text-3xl font-bold">Familias confirmadas</h2>
+          <p>
+            {confimartedFamilies?.length ?? 0} / {families.length} familias han
+            confirmado
+          </p>
+        </div>
 
         <article>
           {groupedFamiliesEntries.map(([key, families]) => (
             <section key={key} className="pb-2 flex justify-center">
               <h3 className="flex gap-2">
                 <strong className="text-xl font-bold">{families.length}</strong>
-                <span>familias de</span>
-                <strong className="text-xl font-bold">
-                  {families[0].totalMembers}
-                </strong>
+                <span>{families.length === 1 ? 'familia' : 'familias'} de</span>
+                <strong className="text-xl font-bold">{key}</strong>
                 <span>{key === '1' ? 'persona' : 'personas'}</span>
               </h3>
             </section>
@@ -115,8 +147,64 @@ export const AdminPage = () => {
         <hr className="my-8" />
       </section>
 
-      <FamilyList title="Confirmados" families={confimartedFamilies} />
+      <section>
+        <PieChart
+          items={[
+            totalMembersByTag(lisFamilies),
+            totalMembersByTag(lisFriends),
+            totalMembersByTag(ponchoFamilies),
+            totalMembersByTag(ponchoFriends),
+          ]}
+          labels={[
+            'Familia Lis',
+            'Amigos Lis',
+            'Familia Poncho',
+            'Amigos Poncho',
+          ]}
+          colors={['#E2BFD9', '#C8A1E0', '#134B70', '#508C9B']}
+          legendPosition="left"
+        />
+
+        <GroupedBarChart
+          labels={[
+            'Familia Lis',
+            'Amigos Lis',
+            'Familia Poncho',
+            'Amigos Poncho',
+          ]}
+          datasets={[
+            {
+              label: 'Confirmados',
+              data: [
+                totalConfirmatedMembersByTag(lisFamilies),
+                totalConfirmatedMembersByTag(lisFriends),
+                totalConfirmatedMembersByTag(ponchoFamilies),
+                totalConfirmatedMembersByTag(ponchoFriends),
+              ],
+              backgroundColor: '#9DC08B',
+              stack: 'stack1',
+            },
+            {
+              label: 'Pendientes',
+              data: [
+                -totalPendingMembersByTag(lisFamilies),
+                -totalPendingMembersByTag(lisFriends),
+                -totalPendingMembersByTag(ponchoFamilies),
+                -totalPendingMembersByTag(ponchoFriends),
+              ],
+              backgroundColor: '#D70654',
+              stack: 'stack1',
+            },
+          ]}
+        />
+      </section>
+
       <hr className="my-8" />
+
+      <FamilyList title="Confirmados" families={confimartedFamilies} />
+
+      <hr className="my-8" />
+
       <FamilyList title="Pendientes" families={pendingFamilies} />
     </motion.section>
   );
