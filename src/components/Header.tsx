@@ -25,7 +25,7 @@ export const Header = () => {
           <Link
             to={{
               pathname: '/',
-              search: `?code=${code}`,
+              search: code ? `?code=${code}` : undefined,
             }}
             className="hover:text-gold"
             onClick={scrollToTop}

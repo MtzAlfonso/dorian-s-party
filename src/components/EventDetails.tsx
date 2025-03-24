@@ -1,8 +1,8 @@
 import { Link, useSearchParams } from 'react-router';
 
-export const About = () => {
+export const EventDetails = () => {
   const [searchParams] = useSearchParams();
-  const code = searchParams.get('code') || '123';
+  const code = searchParams.get('code') || '';
 
   return (
     <section className="py-24 px-6 text-center bg-dark text-light" id="about">
@@ -39,12 +39,14 @@ export const About = () => {
         ¡Te esperamos!
       </p>
 
-      <Link
-        to={{ pathname: '/invite', search: `?code=${code}` }}
-        className="inline-block mt-12 bg-button text-dark py-4 px-10 rounded-lg text-lg shadow-2xl hover:bg-button-hover"
-      >
-        Confirmar asistencia
-      </Link>
+      {code !== '' && (
+        <Link
+          to={{ pathname: '/invite', search: `?code=${code}` }}
+          className="inline-block mt-12 bg-button text-dark py-4 px-10 rounded-lg text-lg shadow-2xl hover:bg-button-hover"
+        >
+          Confirmar asistencia
+        </Link>
+      )}
     </section>
   );
 };

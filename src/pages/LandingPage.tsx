@@ -1,4 +1,4 @@
-import { About, Contact, Details, HeroSection } from '../components';
+import { EventDetails, Contact, Details, HeroSection } from '../components';
 
 export const LandingPage = () => {
   return (
@@ -7,7 +7,7 @@ export const LandingPage = () => {
       <HeroSection />
 
       {/* About Section */}
-      <About />
+      <EventDetails />
 
       {/* Event Details Section */}
       <Details />
