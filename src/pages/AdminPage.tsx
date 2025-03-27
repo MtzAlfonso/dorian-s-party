@@ -123,7 +123,7 @@ export const AdminPage = () => {
 
       <section className="text-center">
         <div className="mb-10">
-          <h2 className="text-3xl font-bold">Familias confirmadas</h2>
+          <h2 className="text-3xl font-bold">Cantidad de boletos a imprimir</h2>
           <p>
             {confimartedFamilies?.length ?? 0} / {families.length} familias han
             confirmado
@@ -135,7 +135,7 @@ export const AdminPage = () => {
             <section key={key} className="pb-2 flex justify-center">
               <h3 className="flex gap-2">
                 <strong className="text-xl font-bold">{families.length}</strong>
-                <span>{families.length === 1 ? 'familia' : 'familias'} de</span>
+                <span>{families.length === 1 ? 'boleto' : 'boletos'} de</span>
                 <strong className="text-xl font-bold">{key}</strong>
                 <span>{key === '1' ? 'persona' : 'personas'}</span>
               </h3>
