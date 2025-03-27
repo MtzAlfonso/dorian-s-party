@@ -123,7 +123,7 @@ export const AdminPage = () => {
 
       <section className="text-center">
         <div className="mb-10">
-          <h2 className="text-3xl font-bold">Cantidad de boletos a imprimir</h2>
+          <h2 className="text-3xl font-bold">Número de boletos</h2>
           <p>
             {confimartedFamilies?.length ?? 0} / {families.length} familias han
             confirmado
