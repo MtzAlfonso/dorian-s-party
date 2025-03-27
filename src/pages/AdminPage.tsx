@@ -145,7 +145,7 @@ export const AdminPage = () => {
 
         <DoughnutChart
           title="Confirmadas"
-          labels={groupedFamiliesLabels.map((label) => `Familia de ${label}`)}
+          labels={groupedFamiliesLabels.map((label) => `Boleto para ${label}`)}
           items={groupedFamiliesItems}
         />
         <hr className="my-8" />
