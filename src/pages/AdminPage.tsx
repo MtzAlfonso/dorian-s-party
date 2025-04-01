@@ -9,7 +9,8 @@ import {
   Loader,
   LoginForm,
 } from '../components';
-import { IFamily, IMember } from '../interfaces/firebase.interfaces';
+import { IFamily, IMember, SocialTag } from '../interfaces/firebase.interfaces';
+import { toTitleCase } from '../utils';
 
 interface IGrouppedFamilies {
   [key: string]: IFamilyGroup[];
@@ -29,10 +30,7 @@ export const AdminPage = () => {
     families,
     confimartedFamilies,
     pendingFamilies,
-    lisFamilies,
-    lisFriends,
-    ponchoFamilies,
-    ponchoFriends,
+    filterFamiliesByTags,
   } = useFamilies();
 
   if (isLoading || loading) {
@@ -79,6 +77,33 @@ export const AdminPage = () => {
     },
     {}
   );
+
+  const HOST_1_NAME = toTitleCase(
+    (import.meta.env.VITE_APP_HOST_1 as string) || ''
+  );
+  const HOST_2_NAME = toTitleCase(
+    (import.meta.env.VITE_APP_HOST_2 as string) || ''
+  );
+
+  const host1Families = filterFamiliesByTags([
+    SocialTag.FAMILY,
+    SocialTag.HOST_1,
+  ]);
+
+  const host1Friends = filterFamiliesByTags([
+    SocialTag.FRIENDS,
+    SocialTag.HOST_1,
+  ]);
+
+  const host2Families = filterFamiliesByTags([
+    SocialTag.FAMILY,
+    SocialTag.HOST_2,
+  ]);
+
+  const host2Friends = filterFamiliesByTags([
+    SocialTag.FRIENDS,
+    SocialTag.HOST_2,
+  ]);
 
   const groupedFamiliesLabels = Object.keys(groupedFamilies || {});
   const groupedFamiliesItems = Object.values(groupedFamilies || {}).map(
@@ -158,16 +183,16 @@ export const AdminPage = () => {
 
         <PieChart
           items={[
-            totalMembersByTag(lisFamilies),
-            totalMembersByTag(lisFriends),
-            totalMembersByTag(ponchoFamilies),
-            totalMembersByTag(ponchoFriends),
+            totalMembersByTag(host1Families),
+            totalMembersByTag(host1Friends),
+            totalMembersByTag(host2Families),
+            totalMembersByTag(host2Friends),
           ]}
           labels={[
-            'Familia Lis',
-            'Amigos Lis',
-            'Familia Poncho',
-            'Amigos Poncho',
+            `Familia ${HOST_1_NAME}`,
+            `Amigos ${HOST_1_NAME}`,
+            `Familia ${HOST_2_NAME}`,
+            `Amigos ${HOST_2_NAME}`,
           ]}
           colors={['#E2BFD9', '#C8A1E0', '#134B70', '#508C9B']}
           legendPosition="left"
@@ -175,19 +200,19 @@ export const AdminPage = () => {
 
         <GroupedBarChart
           labels={[
-            'Familia Lis',
-            'Amigos Lis',
-            'Familia Poncho',
-            'Amigos Poncho',
+            `Familia ${HOST_1_NAME}`,
+            `Amigos ${HOST_1_NAME}`,
+            `Familia ${HOST_2_NAME}`,
+            `Amigos ${HOST_2_NAME}`,
           ]}
           datasets={[
             {
               label: 'Pendientes',
               data: [
-                totalPendingMembersByTag(lisFamilies),
-                totalPendingMembersByTag(lisFriends),
-                totalPendingMembersByTag(ponchoFamilies),
-                totalPendingMembersByTag(ponchoFriends),
+                totalPendingMembersByTag(host1Families),
+                totalPendingMembersByTag(host1Friends),
+                totalPendingMembersByTag(host2Families),
+                totalPendingMembersByTag(host2Friends),
               ],
               backgroundColor: '#D70654',
               stack: 'stack1',
@@ -195,10 +220,10 @@ export const AdminPage = () => {
             {
               label: 'Confirmados',
               data: [
-                totalConfirmatedMembersByTag(lisFamilies),
-                totalConfirmatedMembersByTag(lisFriends),
-                totalConfirmatedMembersByTag(ponchoFamilies),
-                totalConfirmatedMembersByTag(ponchoFriends),
+                totalConfirmatedMembersByTag(host1Families),
+                totalConfirmatedMembersByTag(host1Friends),
+                totalConfirmatedMembersByTag(host2Families),
+                totalConfirmatedMembersByTag(host2Friends),
               ],
               backgroundColor: '#9DC08B',
               stack: 'stack1',

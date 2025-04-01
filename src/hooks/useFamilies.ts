@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { IFamily } from '../interfaces/firebase.interfaces';
+import { IFamily, SocialTag } from '../interfaces/firebase.interfaces';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
@@ -68,25 +68,11 @@ export const useFamilies = () => {
     return a.name.localeCompare(b.name);
   });
 
-  const lisFamilies =
-    families
-      ?.filter((family) => family?.tags?.includes('LIS'))
-      .filter((family) => family?.tags?.includes('FAMILIA')) || [];
-
-  const lisFriends =
-    families
-      ?.filter((family) => family?.tags?.includes('LIS'))
-      .filter((family) => family?.tags?.includes('AMIGOS')) || [];
-
-  const ponchoFamilies =
-    families
-      ?.filter((family) => family?.tags?.includes('PONCHO'))
-      .filter((family) => family?.tags?.includes('FAMILIA')) || [];
-
-  const ponchoFriends =
-    families
-      ?.filter((family) => family?.tags?.includes('PONCHO'))
-      .filter((family) => family?.tags?.includes('AMIGOS')) || [];
+  const filterFamiliesByTags = (tags: SocialTag[]) => {
+    return families?.filter((family) =>
+      family?.tags?.every((tag) => tags.includes(tag))
+    );
+  };
 
   return {
     families: [
@@ -95,10 +81,7 @@ export const useFamilies = () => {
     ],
     confimartedFamilies: sortedConfirmedFamilies,
     pendingFamilies: sortedPendingFamilies,
-    lisFamilies,
-    lisFriends,
-    ponchoFamilies,
-    ponchoFriends,
+    filterFamiliesByTags,
     isLoading,
   };
 };
