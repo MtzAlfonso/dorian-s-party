@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { ChartProps, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
-// Registramos los elementos necesarios para Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface IPieChartProps {

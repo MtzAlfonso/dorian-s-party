@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
   signOut,
   User,
 } from 'firebase/auth';
@@ -38,16 +37,6 @@ export function useAuth() {
     }
   };
 
-  // Registrar usuario con email y contraseña
-  const registerWithEmail = async (email: string, password: string) => {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      console.log('Usuario registrado con éxito');
-    } catch (error) {
-      console.error('Error al registrar usuario:', error);
-    }
-  };
-
   // Cerrar sesión
   const logout = async () => {
     try {
@@ -57,5 +46,5 @@ export function useAuth() {
     }
   };
 
-  return { user, loading, loginWithEmail, registerWithEmail, logout };
+  return { user, loading, loginWithEmail, logout };
 }

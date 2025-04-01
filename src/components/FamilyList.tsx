@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, Fragment, useEffect } from 'react';
 import { IFamily } from '../interfaces';
 import { useCopyToClipboard } from 'react-use';
 import Swal from 'sweetalert2';
@@ -43,8 +43,8 @@ export const FamilyList: FC<IFamilyListProps> = ({ title, families = [] }) => {
       </h2>
       <ul>
         {families?.map((family, i, arr) => (
-          <>
-            <li key={family.id} className="pb-5">
+          <Fragment key={family.id}>
+            <li className="pb-5">
               <h2 className="text-2xl font-bold">{family.name}</h2>
               <span>
                 {family.members.length}{' '}
@@ -71,9 +71,9 @@ export const FamilyList: FC<IFamilyListProps> = ({ title, families = [] }) => {
               </section>
 
               <ul>
-                {family.members.map((member) => (
+                {family.members.map((member, i) => (
                   <li
-                    key={member.name}
+                    key={`${member.name}-${i}`}
                     className="flex gap-2 pl-4 justify-between py-1"
                   >
                     <span> - {member.name}</span>
@@ -88,11 +88,10 @@ export const FamilyList: FC<IFamilyListProps> = ({ title, families = [] }) => {
                 ))}
               </ul>
             </li>
-            {/* Linea punteada */}
             {i < arr.length - 1 && (
               <hr className="border-gray-300 mt-4 mb-8 border-dashed" />
             )}
-          </>
+          </Fragment>
         ))}
       </ul>
     </section>

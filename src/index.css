@@ -15,9 +15,11 @@
 @theme {
   --color-primary: #56705e; /* Beige claro */
   --color-secondary: #b8860b; /* Dorado */
+  --color-red: #b03a2e; /* Rojo */
   --color-light: #fbf7f0; /* Marfil */
   --color-warm: #e6dfd3; /* Beige cálido */
   --color-dark: #3d5746; /* Verde bosque */
+  --color-dark-red: #7a2c2c; /* Rojo oscuro */
   --color-accent: #c99c1d; /* Dorado miel */
   --color-neutral: #8c8472; /* Gris topo */
   --color-button: #d3e671;

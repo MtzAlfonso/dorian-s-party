@@ -9,7 +9,6 @@ import {
   Legend,
 } from 'chart.js';
 
-// Registramos los elementos necesarios para Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 interface IGroupedBarChartProps {

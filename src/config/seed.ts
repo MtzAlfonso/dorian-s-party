@@ -1,120 +1,5 @@
 import { collection, addDoc } from 'firebase/firestore';
 
-// 80 invitados
-// Familia Martínez Baeza
-// 1. Mamá Alis
-// 2. Papá Poncho
-// 3. Ferchis
-// Familia Martínez Beltrán
-// 4. Iván
-// 5. Hannia
-// Familia David
-// 6. David
-// 7. Mamá David
-// 8. Hermana David
-// Familia Tía Elena
-// 9. Tía Elena
-// 10. Tío Roberto
-// 11. Monis
-// 12. Ernesto
-// 13. Ezequiel
-// Familia Tía Gise
-// 14. Tía Gise
-// 15. Acompañante Tía Gise
-// Familia Tío Rubén
-// 16. Tío Rubén
-// 17. Tía Marce
-// Familia Yose
-// 18. Yoselin
-// 19. Alex
-// 20. Alma
-// 21. Ricardo
-// Tío Adolfo
-// 22. Adolfo Martínez
-// Bere
-// 23. Berenice
-// Vale Arreguin
-// 24. Valería Arreguin
-// 25. Acompañante Vale
-// Familia Víctor
-// 26. Víctor García
-// 27. Marlén
-// 28. Eren Gael
-// Familia Tía Cris
-// 29. Tía Cris
-// 30. Tío Iván
-// 31. Blanquita
-// Abuelos
-// 32. Abuela Ceci
-// 33. Abuelo Daniel
-// Familia Tía Chena
-// 34. Tía Chena
-// 35. Tío Gallo
-// Familia Tía Dulce
-// 36. Tía Dulce
-// 37. Michelle
-// 38. Tato
-// 39. César
-// Ángel Vargas
-// 40. Ángel Vargas
-// Familia Raya Renedo
-// 41. Mamá Pera
-// 42. Sofi
-// 43. Lore
-// 44. Iván
-// Familia Renedo Quiroz
-// 45. Tío Paco
-// 46. Tía Irma
-// 47. Sealtiel
-// Gabo
-// 48. Gabo
-// Familia Renedo Beltrán
-// 49. Tía Eri
-// 50. Naomi
-// 51. Nahím
-// 52. Santi
-// Familia Renedo Montes de Oca
-// 53. Tío Godo
-// 54. Tía Claudia
-// 55. Citlali
-// 56. Chucho
-// 57. Juan Carlos
-// Familia Tío Raúl
-// 58. Tío Raúl
-// 59. Esposa Tío Raúl
-// Familia Raya Sánchez
-// 60. Padrino Rubén
-// 61. Angie
-// 62. Javier
-// 63. Mireya
-// Familia Sánchez Raya
-// 64. Tía Toña
-// 65. Tía Elizabeth
-// 66. Teddy
-// 67. Fatima
-// 68. Tía Laura
-// Almita
-// 69. Almita
-// David
-// 70. David
-// Oscar B.
-// 71. Oscar
-// Victor
-// 72. Victor
-// Dianita
-// 73. Diana
-// Manu
-// 74. Manu
-// Familia Vázquez
-// 75. Ana
-// 76. Esposo Ana
-// 77. Bebé Ana
-// Gabo
-// 78. Gabo
-// Familia Martínez Raya
-// 79. Lis
-// 80. Poncho
-
 import { db } from './firebase';
 
 const families = [
@@ -353,7 +238,6 @@ const generateSlug = (name: string) => {
 
 export const seed = async () => {
   try {
-    // Add a new document with a generated id.
     for (const family of families) {
       const slug = generateSlug(family.name);
       const docRef = await addDoc(collection(db, 'families'), {

@@ -12,7 +12,7 @@ export const useFamily = (id?: string) => {
   const getFamily = useCallback(async (id?: string) => {
     try {
       setIsLoading(true);
-      // Usamos getDoc para obtener un documento específico
+
       const docRef = doc(db, 'families', id!);
       const docSnap = await getDoc(docRef);
 
@@ -32,7 +32,7 @@ export const useFamily = (id?: string) => {
     async (id: string, data: IFamily) => {
       try {
         setIsUpdating(true);
-        // Usamos setDoc para actualizar un documento específico
+
         await setDoc(doc(db, 'families', id), data);
         Swal.fire({
           icon: 'success',

@@ -35,8 +35,8 @@ export const Card: FC<ICardProps> = ({ member, onConfirm, loading }) => {
           className={twMerge([
             'p-2 h-10 w-10 rounded-md cursor-pointer flex justify-center items-center mx-auto',
             stateMember.confirmation
-              ? 'bg-teal-600 text-white hover:bg-teal-700'
-              : 'border border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white',
+              ? 'bg-primary text-white hover:bg-dark'
+              : 'border border-primary text-primary hover:bg-dark hover:text-white',
           ])}
         >
           <MdCheck className="text-xl" />
@@ -46,8 +46,8 @@ export const Card: FC<ICardProps> = ({ member, onConfirm, loading }) => {
           className={twMerge([
             'p-2 h-10 w-10 rounded-md cursor-pointer flex justify-center items-center mx-auto',
             stateMember.confirmation
-              ? 'border border-red-600 text-red-600 hover:bg-red-600 hover:text-white'
-              : 'bg-red-600 text-white hover:bg-red-700',
+              ? 'border border-red text-red hover:bg-red hover:text-white'
+              : 'bg-red text-white hover:bg-dark-red',
           ])}
         >
           <MdClose className="text-xl" />
