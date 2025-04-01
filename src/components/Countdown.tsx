@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { differenceInSeconds, format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import { differenceInSeconds } from 'date-fns';
 import Confetti from 'react-confetti';
 import { motion } from 'framer-motion';
 import { FlipUnit } from './FlipUnit';
@@ -40,14 +39,30 @@ export const Countdown = () => {
   if (timeLeft <= 0) {
     return (
       <div className="flex flex-col items-center justify-center text-center h-20 my-2 w-full">
-        <Confetti numberOfPieces={100} gravity={0.15} />
+        <Confetti
+          numberOfPieces={100}
+          gravity={0.15}
+          colors={[
+            '#56705e',
+            '#b8860b',
+            '#fbf7f0',
+            '#e6dfd3',
+            '#3d5746',
+            '#c99c1d',
+            '#8c8472',
+            '#d3e671',
+            '#b8d576',
+          ]}
+          width={window.innerWidth}
+          height={window.innerHeight + 40}
+        />
         <motion.h3
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
           className="text-4xl text-secondary"
         >
-          {format(targetDate, 'dd/MMMM/yyyy', { locale: es })}
+          ¡Es hoy, es hoy!
         </motion.h3>
       </div>
     );
