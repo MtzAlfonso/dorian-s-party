@@ -60,10 +60,10 @@ export const Header = () => {
             <li>
               <button
                 onClick={logout}
-                className="bg-primary text-white p-2 rounded-lg flex gap-2 items-center"
+                className="bg-dark text-white py-2 px-4 rounded-full flex gap-2 items-center"
               >
-                <MdLogout className="text-xl" />
-                <span>Cerrar sesión</span>
+                <MdLogout className="text-2xl inline" />
+                <span>Salir</span>
               </button>
             </li>
           </ul>

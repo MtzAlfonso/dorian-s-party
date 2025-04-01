@@ -42,7 +42,7 @@ export const EventDetails = () => {
       {code !== '' && (
         <Link
           to={{ pathname: '/invite', search: `?code=${code}` }}
-          className="inline-block mt-12 bg-button text-dark py-4 px-10 rounded-lg text-lg shadow-2xl hover:bg-button-hover"
+          className="inline-block mt-12 bg-button text-dark py-4 px-10 rounded-full text-lg shadow-2xl hover:bg-button-hover"
         >
           Confirmar asistencia
         </Link>

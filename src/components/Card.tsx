@@ -25,18 +25,22 @@ export const Card: FC<ICardProps> = ({ member, onConfirm, loading }) => {
         <h2 className="text-xl font-bold">{stateMember.name}</h2>
 
         <p className="mt-2">
-          {stateMember.confirmation ? 'Confirmado' : 'Sin confirmar'}
+          {stateMember.confirmation ? (
+            <span className="text-dark">Confirmado</span>
+          ) : (
+            <span className="text-dark-red">Sin confirmar</span>
+          )}
         </p>
       </section>
 
-      <section className="flex gap-4 items-center justify-center">
+      <section className="flex gap-2 items-center justify-center">
         <button
           onClick={() => handleConfirmation(true)}
           className={twMerge([
-            'p-2 h-10 w-10 rounded-md cursor-pointer flex justify-center items-center mx-auto',
+            'p-2 h-10 w-14 rounded-full cursor-pointer flex justify-center items-center mx-auto',
             stateMember.confirmation
               ? 'bg-primary text-white hover:bg-dark'
-              : 'border border-primary text-primary hover:bg-dark hover:text-white',
+              : 'border border-primary text-primary hover:dark hover:border-dark hover:text-dark',
           ])}
         >
           <MdCheck className="text-xl" />
@@ -44,9 +48,9 @@ export const Card: FC<ICardProps> = ({ member, onConfirm, loading }) => {
         <button
           onClick={() => handleConfirmation(false)}
           className={twMerge([
-            'p-2 h-10 w-10 rounded-md cursor-pointer flex justify-center items-center mx-auto',
+            'p-2 h-10 w-14 rounded-full cursor-pointer flex justify-center items-center mx-auto',
             stateMember.confirmation
-              ? 'border border-red text-red hover:bg-red hover:text-white'
+              ? 'border border-red text-red hover:dark-red hover:border-dark-red hover:text-dark-red'
               : 'bg-red text-white hover:bg-dark-red',
           ])}
         >
